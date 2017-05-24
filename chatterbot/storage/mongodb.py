@@ -272,11 +272,27 @@ class MongoDatabaseAdapter(StorageAdapter):
         in_response_to field. Otherwise, the logic adapter may find a closest
         matching statement that does not have a known response.
         """
-        response_query = self.statements.distinct('in_response_to.text')
 
+        # List statements without known responses
+
+        # response_query = self.statements.distinct('in_response_to.text')
+
+        response_query = self.statements.aggregate({
+            '$project': {
+                'text': {
+                    '$setDifference': [['$text'], ['$in_response_to.text']]
+                }
+            }
+        })
+
+        print(response_query)
+
+        # Select statements that are not in the list of statements without known responses
         _statement_query = {
             'text': {
-                '$in': response_query
+                '$not': {
+                    '$in': response_query
+                }
             }
         }
 
