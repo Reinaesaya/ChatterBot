@@ -3,24 +3,25 @@ from datetime import datetime
 from .logic_adapter import LogicAdapter
 
 
-class TimeLogicAdapter(LogicAdapter):
+class DateLogicAdapter(LogicAdapter):
     """
-    The TimeLogicAdapter returns the current time.
+    The DateLogicAdapter returns the current time.
     """
 
     def __init__(self, **kwargs):
-        super(TimeLogicAdapter, self).__init__(**kwargs)
+        super(DateLogicAdapter, self).__init__(**kwargs)
         from nltk import NaiveBayesClassifier
 
         self.positive = [
-            'what time is it here',
-            'do you know the time',
-            'do you know what time it is',
-            'what is the time',
-            'whats the time'
+            'what date is it here',
+            'do you know the date',
+            'do you know what date it is',
+            'what is the date',
+            'whats the date'
         ]
 
         self.negative = [
+            "when do we go"
             'it is time to go to sleep',
             'what is your favorite color',
             'i had a great time',
@@ -37,11 +38,11 @@ class TimeLogicAdapter(LogicAdapter):
         )
 
         # train_set = apply_features(self.time_question_features, training_data)
-        train_set = [(self.time_question_features(n), text) for (n, text) in labeled_data]
+        train_set = [(self.date_question_features(n), text) for (n, text) in labeled_data]
 
         self.classifier = NaiveBayesClassifier.train(train_set)
 
-    def time_question_features(self, text):
+    def date_question_features(self, text):
         """
         Provide an analysis of significan features in the string.
         """
@@ -63,12 +64,11 @@ class TimeLogicAdapter(LogicAdapter):
 
         now = datetime.now()
 
-        time_features = self.time_question_features(statement.text.lower())
+        time_features = self.date_question_features(statement.text.lower())
         confidence = self.classifier.classify(time_features)
-        response = Statement('The current time is ' + now.strftime('%I:%M %p'))
+        response = Statement('Today is ' + now.strftime('%A, %B %d %Y'))
 
         statement_cleaned = ''.join([x for x in statement.text.lower() if x.isalpha() or x==' '])
-
         statement_match = False
         for p in self.positive:
             if p in statement_cleaned:
