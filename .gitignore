@@ -9,6 +9,7 @@ venv
 *.egg-info
 *.egg/*
 *.eggs/*
+*~
 
 # Database files
 *.sqlite3
