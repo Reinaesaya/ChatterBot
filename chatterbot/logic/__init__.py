@@ -8,6 +8,7 @@ from .specific_response import SpecificResponseAdapter
 from .time_adapter import TimeLogicAdapter
 from .date_adapter import DateLogicAdapter
 from .mitsuku_chatbot import MitsukuChatBotAdapter
+from .rose_chatbot import RoseChatBotAdapter
 
 
 __all__ = (
@@ -21,4 +22,5 @@ __all__ = (
     'TimeLogicAdapter',
     'DateLogicAdapter',
     'MitsukuChatBotAdapter',
+    'RoseChatBotAdapter',
 )

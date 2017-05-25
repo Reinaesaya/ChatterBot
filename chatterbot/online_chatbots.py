@@ -80,10 +80,32 @@ class Mitsuku:
 			#print('Invalid input. Mitsuku had no answer')
 			return None
 		self.last_convohtml = p
-		self.last_response = p.split('<br/> <br/>')[0].split('</b>')[-1]
+		self.last_response = p.split('<br/> <br/>')[0].split('</b>')[-1].strip()
+		#print(self.last_response.strip())
+		self.last_response = self.removeTextWithinAngleBrackets(self.last_response)
 		self.all_responses.append(self.last_response)
 
 		return self.last_response
+
+	def removeTextWithinAngleBrackets(self, text):
+		new = ""
+		left = 0
+		for t in text:
+			if t == '<':
+				left += 1
+				continue
+			elif t == '>':
+				left -= 1
+				new = new+' '
+				continue
+
+			if left < 0:
+				print("Something went wrong in removing angle brackets")
+				print(text)
+				return text
+			if left == 0:
+				new = new+t
+		return new.strip()
 
 	def runSimulation(self):
 		print('\n*------*')
@@ -110,10 +132,9 @@ class Mitsuku:
 ### Rose ChatBot ###
 
 class Rose:
-	def __init__(self, user='User'):
-		self.User = user
+	def __init__(self, user=None):
 		self.url = 'http://ec2-54-215-197-164.us-west-1.compute.amazonaws.com/ui.php'
-		self.refresh()
+		self.refresh(user)
 
 	def generateRandomID(self, length=10):
 		rose_id = ''.join(random.choice(string.ascii_uppercase+string.digits) for _ in range(length))
@@ -123,7 +144,7 @@ class Rose:
 		if user is not None:
 			self.User = user
 		else:
-			self.User = self.generateRandomID()				# Rose history stored by User, so refresh it
+			self.User = self.generateRandomID()				# Rose history might be stored by User, so refresh it
 		self.all_messages = []
 		self.last_message = None
 		self.all_responses = []
@@ -143,6 +164,7 @@ class Rose:
 		response = urllib2.urlopen(req)
 
 		self.last_response = response.read().split(']')[-1]    # Get rid of the "[callback=3000 ]"
+		self.last_response = self.last_response.strip()
 		self.all_responses.append(self.last_response)
 
 		return self.last_response

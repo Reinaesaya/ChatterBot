@@ -1,8 +1,18 @@
 from chatterbot import ChatBot
 import logging
 
-# Enable info level logging
-logging.basicConfig(level=logging.INFO)
+import argparse
+
+
+parser = argparse.ArgumentParser()
+parser.add_argument('-l', action='store_true', help='Turn on logging')
+parser.add_argument('-t', action='store_true', help='Train chatbot')
+
+args = parser.parse_args()
+
+if args.l:
+	# Enable info level logging
+	logging.basicConfig(level=logging.INFO)
 
 
 chatbot = ChatBot(
@@ -35,14 +45,15 @@ chatbot = ChatBot(
 	input_adapter="chatterbot.input.TerminalAdapter",
 	output_adapter="chatterbot.output.TerminalAdapter",
 	trainer='chatterbot.trainers.ChatterBotCorpusTrainer',
-	database="./tatora.db",
+	database="./tatora.json",
 )
 
-# Train based on the english corpus
-#print("Training")
-#chatbot.train("chatterbot.corpus.english")
+if args.t:
+	# Train based on the english corpus
+	print("Training")
+	chatbot.train("chatterbot.corpus.english")
+	#chatbot.trainer.export_for_training('./tatora.json')
 
-#chatbot.trainer.export_for_training('./tatora.json')
 
 print("Talk to Tatora! :)")
 while True:
@@ -51,9 +62,3 @@ while True:
 
 	except(KeyboardInterrupt, EOFError, SystemExit):
 		break
-
-# while True:
-# 	message = raw_input("Input: ")
-# 	print("Waiting for response...")
-# 	response = chatbot.get_response(message)
-# 	print(response)

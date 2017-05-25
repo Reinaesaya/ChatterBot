@@ -13,6 +13,7 @@ class DateLogicAdapter(LogicAdapter):
         from nltk import NaiveBayesClassifier
 
         self.positive = [
+            'what date is it',
             'what date is it here',
             'do you know the date',
             'do you know what date it is',

@@ -1,5 +1,3 @@
-![Chatterbot: Machine learning in Python](http://i.imgur.com/b3SCmGT.png)
-
 # OUIRL-ChatBot
 
 The OUIRL (Osaka University Intelligent Robotics Laboratory) ChatBot is an experimental fork upon this [ChatterBot](https://github.com/gunthercox/ChatterBot). Additions upon the original API include adding adapters for various online chatterbots, and trial implementation of visual stimuli through image/video captioning for conversation manipulation.

@@ -13,7 +13,6 @@ venv
 # Database files
 *.sqlite3
 *.db
-*.json
 
 # Sphinx docs
 docs/_build/

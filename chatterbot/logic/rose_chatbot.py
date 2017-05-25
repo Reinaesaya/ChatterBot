@@ -1,20 +1,20 @@
 from __future__ import unicode_literals
 from .logic_adapter import LogicAdapter
 from chatterbot.conversation import Statement
-from chatterbot.online_chatbots import Mitsuku
+from chatterbot.online_chatbots import Rose
 
-class MitsukuChatBotAdapter(LogicAdapter):
+class RoseChatBotAdapter(LogicAdapter):
     """
-    The MitsukuChatBotAdapter returns the response that the Mitsuku chatbot would reply with
+    The RoseChatBotAdapter returns the response that the Rose chatbot would reply with
     """
 
     def __init__(self, **kwargs):
-        super(MitsukuChatBotAdapter, self).__init__(**kwargs)
+        super(RoseChatBotAdapter, self).__init__(**kwargs)
 
-        self.mitsuku = Mitsuku()
+        self.rose = Rose()
 
     def process(self, statement):
-        resp = self.mitsuku.getResponse(statement.text)
+        resp = self.rose.getResponse(statement.text)
         if resp == None:
             response = Statement("Sorry, I don't know how to reply to that")
             response.confidence = 0.1
