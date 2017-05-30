@@ -17,10 +17,13 @@ if args.l:
 
 chatbot = ChatBot(
 	'Tatora',
-	read_only=True,
-	storage_adapter="chatterbot.storage.JsonFileStorageAdapter",
+	read_only=False,
+	storage_adapter={
+		"import_path": "chatterbot.storage.SQLAlchemyDatabaseAdapter",
+		"create": True,
+	},
 	logic_adapters=[
-		"chatterbot.logic.MitsukuChatBotAdapter",
+		#"chatterbot.logic.MitsukuChatBotAdapter",
 		"chatterbot.logic.TimeLogicAdapter",
 		"chatterbot.logic.DateLogicAdapter",
 		"chatterbot.logic.MathematicalEvaluation",
@@ -29,23 +32,23 @@ chatbot = ChatBot(
         #    "statement_comparison_function": "chatterbot.comparisons.jaccard_similarity",
         #    "response_selection_method": "chatterbot.response_selection.get_random_response"
         #},
-		#{
-        #    "import_path": "chatterbot.logic.BestMatch",
-        #    "statement_comparison_function": "chatterbot.comparisons.levenshtein_distance",
-        #    "response_selection_method": "chatterbot.response_selection.get_random_response"
-        #},
+		{
+            "import_path": "chatterbot.logic.BestMatch",
+            "statement_comparison_function": "chatterbot.comparisons.levenshtein_distance",
+            "response_selection_method": "chatterbot.response_selection.get_random_response"
+        },
 	],
 	preprocessors=[
 		'chatterbot.preprocessors.clean_whitespace',
 		'chatterbot.preprocessors.unescape_html',
 	],
 	filters=[
-		"chatterbot.filters.RepetitiveResponseFilter"
+		#"chatterbot.filters.RepetitiveResponseFilter"
 	],
 	input_adapter="chatterbot.input.TerminalAdapter",
 	output_adapter="chatterbot.output.TerminalAdapter",
 	trainer='chatterbot.trainers.ChatterBotCorpusTrainer',
-	database="./tatora.json",
+	database="./test",
 )
 
 if args.t:

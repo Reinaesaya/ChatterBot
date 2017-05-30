@@ -24,7 +24,10 @@ else:
 CB1 = ChatBot(
 	'M',
 	read_only=args.ro,
-	storage_adapter="chatterbot.storage.SQLAlchemyDatabaseAdapter",
+	storage_adapter={
+		"import_path": "chatterbot.storage.SQLAlchemyDatabaseAdapter",
+		"create": True,
+	},
 	logic_adapters=[
 		"chatterbot.logic.MitsukuChatBotAdapter",
 		"chatterbot.logic.TimeLogicAdapter",
@@ -36,18 +39,21 @@ CB1 = ChatBot(
 		'chatterbot.preprocessors.unescape_html',
 	],
 	filters=[
-		"chatterbot.filters.RepetitiveResponseFilter"
+#		"chatterbot.filters.RepetitiveResponseFilter"
 	],
 	input_adapter="chatterbot.input.VariableInputTypeAdapter",
 	output_adapter="chatterbot.output.OutputAdapter",
 	trainer='chatterbot.trainers.ChatterBotCorpusTrainer',
-	database="./test.db",
+	database="./test",
 )
 
 CB2 = ChatBot(
 	'R',
 	read_only=args.ro,
-	storage_adapter="chatterbot.storage.SQLAlchemyDatabaseAdapter",
+	storage_adapter={
+		"import_path": "chatterbot.storage.SQLAlchemyDatabaseAdapter",
+		"create": True,
+	},
 	logic_adapters=[
 		"chatterbot.logic.RoseChatBotAdapter",
 		"chatterbot.logic.TimeLogicAdapter",
@@ -64,7 +70,7 @@ CB2 = ChatBot(
 	input_adapter="chatterbot.input.VariableInputTypeAdapter",
 	output_adapter="chatterbot.output.OutputAdapter",
 	trainer='chatterbot.trainers.ChatterBotCorpusTrainer',
-	database="./test.db",
+	database="./test",
 )
 
 if args.t:

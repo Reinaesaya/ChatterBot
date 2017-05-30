@@ -43,6 +43,7 @@ class StorageAdapter(object):
         if self.adapter_supports_queries:
             for filter_instance in chatterbot.filters:
                 self.base_query = filter_instance.filter_selection(chatterbot, session_id)
+                print(self.base_query)
 
     def count(self):
         """

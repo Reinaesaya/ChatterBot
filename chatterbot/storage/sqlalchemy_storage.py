@@ -105,6 +105,8 @@ class SQLAlchemyDatabaseAdapter(StorageAdapter):
 
         self.Session = sessionmaker(bind=self.engine, expire_on_commit=True)
 
+        self.adapter_supports_queries = False
+
     def count(self):
         """
         Return the number of entries in the database.
