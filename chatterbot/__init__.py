@@ -3,10 +3,10 @@ ChatterBot is a machine learning, conversational dialog engine.
 """
 from .chatterbot import ChatBot
 
-__version__ = '0.6.0'
-__author__ = 'Gunther Cox'
-__email__ = 'gunthercx@gmail.com'
-__url__ = 'https://github.com/gunthercox/ChatterBot'
+__version__ = '1.6.0'
+__author__ = 'Sean Liu'
+__email__ = 'xseanhylx@gmail.com'
+__url__ = 'https://github.com/Reinaesaya/OUIRL-ChatBot'
 
 __all__ = (
     'ChatBot',

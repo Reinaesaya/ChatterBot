@@ -28,3 +28,5 @@ examples/ubuntu_dialogs*
 .env
 .out
 venv*
+
+*.mp3
