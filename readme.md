@@ -1,8 +1,11 @@
 # OUIRL-ChatBot
 
-The OUIRL (Osaka University Intelligent Robotics Laboratory) ChatBot is an experimental fork upon this opensource [ChatterBot](https://github.com/gunthercox/ChatterBot). Additions upon the original API will include adding adapters for various online chatterbots, and trial implementation of visual stimuli through image/video captioning for conversation manipulation (https://github.com/Reinaesaya/OUIRL-im2txt)
+The OUIRL (Osaka University Intelligent Robotics Laboratory) ChatBot is an experimental fork upon this opensource [ChatterBot](https://github.com/gunthercox/ChatterBot). Additions upon the original API will include adding adapters for various online chatterbots, and trial implementation of visual stimuli through image/video captioning for conversation manipulation.
 
-Please refer to the original Github repo for setup procedures, though simple cloning of repository and execution of following command should be sufficient. There are also various modules that need to be installed through pip: 
+
+## Setup:
+
+1) Please refer to the original Github repo for setup procedures, though simple cloning of repository and execution of following command should be sufficient. There are also various modules that need to be installed through pip: 
 
 ```
 # Original ChatterBot setup installations
@@ -21,11 +24,17 @@ pip install pygame
 
 ```
 
+2) Navigate to [/chatterbot/imgcaption/](chatterbot/imgcaption) and follow the setup precedures there to implement image captioning
+
+
+## Running
+
 To run terminal-based example module, simply run:
 
 ```
 python TatoraChat.py
 ```
+
 
 # License
 

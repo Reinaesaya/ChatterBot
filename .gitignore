@@ -29,4 +29,8 @@ examples/ubuntu_dialogs*
 .out
 venv*
 
+# MP3 files (audio)
 *.mp3
+
+# Pretrained models
+*/pretrained_model/model.ckpt*.data*
