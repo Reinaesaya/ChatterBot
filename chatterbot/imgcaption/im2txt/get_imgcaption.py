@@ -51,8 +51,8 @@ class ImageCaptioner():
 
 
 if __name__ == "__main__":
-	IC = ImageCaptioner("/home/sean/Desktop/OUIRL-ChatBot/chatterbot/imgcaption/pretrained_model/model.ckpt-2000000",\
-		"/home/sean/Desktop/OUIRL-ChatBot/chatterbot/imgcaption/pretrained_model/word_counts.txt")
+	IC = ImageCaptioner("/home/sean/OUIRL-ChatBot/chatterbot/imgcaption/pretrained_model/model.ckpt-2000000",\
+		"/home/sean/OUIRL-ChatBot/chatterbot/imgcaption/pretrained_model/word_counts.txt")
 	IC.openSession()
-	IC.getCaption("/home/sean/Downloads/tv-on-table.jpg")
+	IC.getCaption("/home/sean/Downloads/engineering_research_lab.jpeg")
 	IC.closeSession()
