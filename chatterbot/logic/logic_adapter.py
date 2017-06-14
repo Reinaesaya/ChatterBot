@@ -11,6 +11,7 @@ class LogicAdapter(Adapter):
 
     def __init__(self, **kwargs):
         super(LogicAdapter, self).__init__(**kwargs)
+        self.adaptername = "LogicAdapter"
         from chatterbot.comparisons import levenshtein_distance
         from chatterbot.response_selection import get_first_response
 

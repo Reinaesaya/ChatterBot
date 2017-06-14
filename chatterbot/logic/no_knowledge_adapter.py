@@ -9,6 +9,9 @@ class NoKnowledgeAdapter(LogicAdapter):
     This adapter is placed at the beginning of the list
     to be given the highest priority.
     """
+    def __init__(self, **kwargs):
+        super(NoKnowledgeAdapter, self).__init__(**kwargs)
+        self.adaptername = "NoKnowledgeAdapter"
 
     def process(self, statement):
         """

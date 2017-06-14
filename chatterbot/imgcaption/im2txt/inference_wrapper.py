@@ -21,8 +21,8 @@ from __future__ import print_function
 
 
 
-import show_and_tell_model
-from inference_utils import inference_wrapper_base 
+from . import show_and_tell_model
+from .inference_utils import inference_wrapper_base 
 
 
 class InferenceWrapper(inference_wrapper_base.InferenceWrapperBase):

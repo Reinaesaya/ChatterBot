@@ -28,6 +28,12 @@ setup(
     author_email=AUTHOR_EMAIL,
     packages=[
         'chatterbot',
+        'chatterbot.imgcaption',
+        'chatterbot.imgcaption.im2txt',
+        'chatterbot.imgcaption.im2txt.data',
+        'chatterbot.imgcaption.im2txt.inference_utils',
+        'chatterbot.imgcaption.im2txt.ops',
+        'chatterbot.imgcaption.pretrained_model',
         'chatterbot.input',
         'chatterbot.output',
         'chatterbot.storage',
@@ -35,10 +41,10 @@ setup(
         'chatterbot.corpus',
         'chatterbot.conversation',
         'chatterbot.ext',
-        'chatterbot.ext.django_chatterbot',
-        'chatterbot.ext.django_chatterbot.migrations',
-        'chatterbot.ext.django_chatterbot.management',
-        'chatterbot.ext.django_chatterbot.management.commands'
+#        'chatterbot.ext.django_chatterbot',
+#        'chatterbot.ext.django_chatterbot.migrations',
+#        'chatterbot.ext.django_chatterbot.management',
+#        'chatterbot.ext.django_chatterbot.management.commands'
     ],
     package_dir={'chatterbot': 'chatterbot'},
     include_package_data=True,

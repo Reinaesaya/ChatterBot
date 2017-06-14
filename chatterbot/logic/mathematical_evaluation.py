@@ -30,6 +30,7 @@ class MathematicalEvaluation(LogicAdapter):
 
     def __init__(self, **kwargs):
         super(MathematicalEvaluation, self).__init__(**kwargs)
+        self.adaptername = "MathematicalEvaluation"
 
         language = kwargs.get('math_words_language', 'english')
         self.math_words = self.get_language_data(language)

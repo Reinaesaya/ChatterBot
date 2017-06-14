@@ -10,6 +10,7 @@ class MitsukuChatBotAdapter(LogicAdapter):
 
     def __init__(self, **kwargs):
         super(MitsukuChatBotAdapter, self).__init__(**kwargs)
+        self.adaptername = "MitsukuChatBotAdapter"
 
         self.mitsuku = Mitsuku()
 

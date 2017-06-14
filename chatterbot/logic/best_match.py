@@ -8,6 +8,10 @@ class BestMatch(LogicAdapter):
     the closest matches to the input statement.
     """
 
+    def __init__():
+        super(BestMatch, self).__init__(**kwargs)
+        self.adaptername = "BestMatch"
+
     def get(self, input_statement):
         """
         Takes a statement string and a list of statement strings.

@@ -9,6 +9,7 @@ from .time_adapter import TimeLogicAdapter
 from .date_adapter import DateLogicAdapter
 from .mitsuku_chatbot import MitsukuChatBotAdapter
 from .rose_chatbot import RoseChatBotAdapter
+from .imgcaption_adapter import ImageCaptioningAdapter
 
 
 __all__ = (
@@ -23,4 +24,5 @@ __all__ = (
     'DateLogicAdapter',
     'MitsukuChatBotAdapter',
     'RoseChatBotAdapter',
+    'ImageCaptioningAdapter',
 )

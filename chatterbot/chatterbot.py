@@ -3,6 +3,7 @@ import logging
 from .storage import StorageAdapter
 from .input import InputAdapter
 from .output import OutputAdapter
+from .imgcaption.im2txt.get_imgcaption import ImageCaptioner
 from . import utils
 
 
@@ -14,6 +15,8 @@ class ChatBot(object):
     def __init__(self, name, **kwargs):
         from .conversation.session import ConversationSessionManager
         from .logic import MultiLogicAdapter
+
+        self.nolearnoverridecomms = ['NewConversationStarter', 'ImageCaptioningAdapter']
 
         self.name = name
         kwargs['name'] = name
@@ -95,7 +98,7 @@ class ChatBot(object):
         nltk_download_corpus('tokenizers/punkt')
         nltk_download_corpus('sentiment/vader_lexicon')
 
-    def get_response(self, input_item, session_id=None):
+    def get_response(self, input_item, session_id=None, override=''):
         """
         Return the bot's response based on the input.
 
@@ -112,27 +115,28 @@ class ChatBot(object):
         for preprocessor in self.preprocessors:
             input_statement = preprocessor(self, input_statement)
 
-        statement, response = self.generate_response(input_statement, session_id)
+        statement, response = self.generate_response(input_statement, session_id, override=override)
 
         # Learn that the user's input was a valid response to the chat bot's previous output
-        previous_statement = self.conversation_sessions.get(
-            session_id
-        ).conversation.get_last_response_statement()
-        self.learn_response(statement, previous_statement)
+        if override not in self.nolearnoverridecomms: 
+            previous_statement = self.conversation_sessions.get(
+                session_id
+            ).conversation.get_last_response_statement()
+            self.learn_response(statement, previous_statement)
 
         self.conversation_sessions.update(session_id, (statement, response, ))
 
         # Process the response output with the output adapter
         return self.output.process_response(response, session_id)
 
-    def generate_response(self, input_statement, session_id):
+    def generate_response(self, input_statement, session_id, override=''):
         """
         Return a response based on a given input statement.
         """
         self.storage.generate_base_query(self, session_id)
 
         # Select a response to the input statement
-        response = self.logic.process(input_statement)
+        response = self.logic.process(input_statement, override=override)
 
         return input_statement, response
 

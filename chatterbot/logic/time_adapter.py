@@ -10,6 +10,7 @@ class TimeLogicAdapter(LogicAdapter):
 
     def __init__(self, **kwargs):
         super(TimeLogicAdapter, self).__init__(**kwargs)
+        self.adaptername = "TimeLogicAdapter"
         from nltk import NaiveBayesClassifier
 
         self.positive = [

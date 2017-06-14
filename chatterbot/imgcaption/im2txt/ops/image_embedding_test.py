@@ -22,7 +22,7 @@ from __future__ import print_function
 
 import tensorflow as tf
 
-import image_embedding
+from . import image_embedding
 
 
 class InceptionV3Test(tf.test.TestCase):

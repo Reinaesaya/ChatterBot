@@ -21,8 +21,8 @@ from __future__ import print_function
 
 import tensorflow as tf
 
-import configuration
-import show_and_tell_model
+from . import configuration
+from . import show_and_tell_model
 
 FLAGS = tf.app.flags.FLAGS
 

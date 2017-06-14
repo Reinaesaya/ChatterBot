@@ -10,6 +10,7 @@ class RoseChatBotAdapter(LogicAdapter):
 
     def __init__(self, **kwargs):
         super(RoseChatBotAdapter, self).__init__(**kwargs)
+        self.adaptername = "RoseChatBotAdapter"
 
         self.rose = Rose()
 

@@ -7,10 +7,10 @@ import os
 
 import tensorflow as tf
 
-import configuration
-import inference_wrapper
-from inference_utils import caption_generator
-from inference_utils import vocabulary
+from . import configuration
+from . import inference_wrapper
+from .inference_utils import caption_generator
+from .inference_utils import vocabulary
 
 
 class ImageCaptioner():
@@ -39,20 +39,24 @@ class ImageCaptioner():
 		self.sess.close()
 
 	def getCaption(self, img_filename):
+		#print("Getting caption")
 		with tf.gfile.GFile(img_filename, "r") as f:
 			image = f.read()
 		captions = self.generator.beam_search(self.sess, image)
-		print("Captions for image %s:" % os.path.basename(img_filename))
+		#print("Captions for image %s:" % os.path.basename(img_filename))
+		captionsentences = []
 		for i, caption in enumerate(captions):
 			# Ignore begin and end words.
 			sentence = [self.vocab.id_to_word(w) for w in caption.sentence[1:-1]]
 			sentence = " ".join(sentence)
-			print("  %d) %s (p=%f)" % (i, sentence, math.exp(caption.logprob)))
+			captionsentences.append([sentence, math.exp(caption.logprob)])
+			#print("  %d) %s (p=%f)" % (i, sentence, math.exp(caption.logprob)))
+		return captionsentences
 
 
 if __name__ == "__main__":
-	IC = ImageCaptioner("/home/sean/OUIRL-ChatBot/chatterbot/imgcaption/pretrained_model/model.ckpt-2000000",\
-		"/home/sean/OUIRL-ChatBot/chatterbot/imgcaption/pretrained_model/word_counts.txt")
+	IC = ImageCaptioner("/home/user2/Desktop/OUIRL-ChatBot/chatterbot/imgcaption/pretrained_model/model.ckpt-2000000",\
+		"/home/user2/Desktop/OUIRL-ChatBot/chatterbot/imgcaption/pretrained_model/word_counts.txt")
 	IC.openSession()
-	IC.getCaption("/home/sean/Downloads/engineering_research_lab.jpeg")
+	IC.getCaption("/home/user2/Downloads/bball.jpg")
 	IC.closeSession()

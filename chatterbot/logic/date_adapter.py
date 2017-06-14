@@ -10,6 +10,7 @@ class DateLogicAdapter(LogicAdapter):
 
     def __init__(self, **kwargs):
         super(DateLogicAdapter, self).__init__(**kwargs)
+        self.adaptername = "DateLogicAdapter"
         from nltk import NaiveBayesClassifier
 
         self.positive = [

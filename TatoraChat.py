@@ -1,6 +1,6 @@
 # Terminal Based Example ChatterBot
 
-from chatterbot import ChatBot
+from chatterbot import ChatBot, CommU
 import logging
 
 from gtts import gTTS
@@ -13,6 +13,7 @@ parser = argparse.ArgumentParser()
 parser.add_argument('-log', action='store_true', help='Turn on logging')
 parser.add_argument('-train', action='store_true', help='Train chatbot')
 parser.add_argument('-audio', action='store_true', help='Turn on audio response')
+parser.add_argument('-commu', action='store_true', help='Connect and use CommU Robot!')
 
 args = parser.parse_args()
 
@@ -33,6 +34,7 @@ chatbot = ChatBot(
 		"chatterbot.logic.TimeLogicAdapter",
 		"chatterbot.logic.DateLogicAdapter",
 		"chatterbot.logic.MathematicalEvaluation",
+		"chatterbot.logic.ImageCaptioningAdapter",
 		#{
         #    "import_path": "chatterbot.logic.BestMatch",
         #    "statement_comparison_function": "chatterbot.comparisons.jaccard_similarity",
@@ -68,10 +70,16 @@ if args.audio:
 	pygame.init()
 	pygame.mixer.init()
 
+if args.commu:
+	CommURobot = CommU()
+	CommURobot.openCommandSocket()
+
 print("Talk to Tatora! :)")
 while True:
 	try:
 		tatora_response = chatbot.get_response(None)
+		if args.commu:
+			CommURobot.say(tatora_response)
 		if args.audio:
 			tts = gTTS(text=tatora_response, lang='en-us', slow=False)
 			tts.save(mp3file)
@@ -80,4 +88,6 @@ while True:
 
 
 	except(KeyboardInterrupt, EOFError, SystemExit):
+		if args.commu:
+			CommURobot.closeCommandSocket()
 		break

@@ -11,6 +11,7 @@ class LowConfidenceAdapter(BestMatch):
 
     def __init__(self, **kwargs):
         super(LowConfidenceAdapter, self).__init__(**kwargs)
+        self.adaptername = "LowConfidenceAdapter"
 
         self.confidence_threshold = kwargs.get('threshold', 0.65)
 

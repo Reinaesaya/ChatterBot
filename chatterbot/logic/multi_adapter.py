@@ -15,6 +15,7 @@ class MultiLogicAdapter(LogicAdapter):
 
     def __init__(self, **kwargs):
         super(MultiLogicAdapter, self).__init__(**kwargs)
+        self.adaptername = "MultiLogicAdapter"
 
         # Logic adapters added by the chat bot
         self.adapters = []
@@ -22,7 +23,7 @@ class MultiLogicAdapter(LogicAdapter):
         # Requied logic adapters that must always be present
         self.system_adapters = []
 
-    def process(self, statement):
+    def process(self, statement, override=''):
         """
         Returns the output of a selection of logic adapters
         for a given input statement.
@@ -33,7 +34,12 @@ class MultiLogicAdapter(LogicAdapter):
         result = None
         max_confidence = -1
 
-        for adapter in self.get_adapters():
+        adapters_to_use = self.get_adapters()
+        override_adapters = [a for a in adapters_to_use if a.adaptername==override]
+        if len(override_adapters) > 0:
+            adapters_to_use = override_adapters
+
+        for adapter in adapters_to_use:
             if adapter.can_process(statement):
 
                 output = adapter.process(statement)

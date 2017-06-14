@@ -23,8 +23,8 @@ from __future__ import print_function
 import numpy as np
 import tensorflow as tf
 
-import configuration
-import show_and_tell_model
+from . import configuration
+from . import show_and_tell_model
 
 
 class ShowAndTellModel(show_and_tell_model.ShowAndTellModel):
