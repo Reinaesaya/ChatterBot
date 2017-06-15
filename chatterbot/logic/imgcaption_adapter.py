@@ -4,6 +4,8 @@ from chatterbot.conversation import Statement
 from chatterbot.constants import *
 
 import os
+import re
+import random
 
 class ImageCaptioningAdapter(LogicAdapter):
     """
@@ -13,6 +15,17 @@ class ImageCaptioningAdapter(LogicAdapter):
     def __init__(self, **kwargs):
         super(ImageCaptioningAdapter, self).__init__(**kwargs)
         self.adaptername = "ImageCaptioningAdapter"
+
+        self.visual_prompts = [
+            'what do you see',
+            'what you see',
+            'do you see something',
+            'what are you looking at',
+            'whats in front of you',
+            'what is in front of you',
+        ]
+
+
 
     def process(self, statement):
         # Statement doesn't do anything
@@ -27,7 +40,28 @@ class ImageCaptioningAdapter(LogicAdapter):
 
         captions = [x.split('.')[0].strip() for x in lines]
 
-        response = Statement('; '.join(captions))
-        response.confidence = 0.01      # Very small (never a prioirity unless forced)
+        #response = Statement('; '.join(captions))
+        #response.confidence = 0.01      # Very small (never a prioirity unless forced)
+        response = self.chooseresponse(statement, captions)
 
+        return response
+
+    def chooseresponse(self, statement, captions):
+
+        tempresp = 'I think I see '+''.join([x for x in captions[0] if x not in ['is', 'are']])
+        response = Statement(tempresp)
+
+        statement_cleaned = ''.join([x for x in statement.text.lower() if x.isalpha() or x==' '])
+
+        prompt_match = False
+        for p in self.visual_prompts:
+            if p in statement_cleaned:
+                prompt_match = True
+                break
+        if prompt_match:
+            tempresp = 'I think I see '+''.join([x for x in captions[0] if x not in ['is', 'are']])
+            response = Statement(tempresp)
+            response.confidence = 1
+        else:
+            response.confidence = 0.01
         return response

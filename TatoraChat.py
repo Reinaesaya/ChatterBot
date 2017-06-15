@@ -53,8 +53,8 @@ chatbot = ChatBot(
 	filters=[
 		#"chatterbot.filters.RepetitiveResponseFilter"
 	],
-	input_adapter="chatterbot.input.TerminalAdapter",
-	output_adapter="chatterbot.output.TerminalAdapter",
+	input_adapter="chatterbot.input.VariableInputTypeAdapter",
+	output_adapter="chatterbot.output.OutputAdapter",
 	trainer='chatterbot.trainers.ChatterBotCorpusTrainer',
 	database="./test",
 )
@@ -77,7 +77,15 @@ if args.commu:
 print("Talk to Tatora! :)")
 while True:
 	try:
-		tatora_response = chatbot.get_response(None)
+		override=''
+		user_input = raw_input('You: ')
+		if user_input.startswith("--override"):
+			override = user_input.split()[1]
+			user_input = ' '.join(user_input.split()[2:])
+
+		tatora_response = chatbot.get_response(user_input, override=override)
+		print("Tatora: "+str(tatora_response))
+
 		if args.commu:
 			CommURobot.say(tatora_response)
 		if args.audio:
