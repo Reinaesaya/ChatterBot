@@ -1,3 +1,3 @@
-a man is sitting at a table with a laptop . 3.87688343874e-05
-a man is sitting at a desk with a laptop . 3.65520704321e-05
-a man is sitting at a desk with a computer . 3.22102888484e-05
+a man is holding a glass of wine . 0.000131608349287
+a man is holding a glass of wine 5.37421794355e-05
+a man is holding a glass of wine in his hand . 2.61764944079e-05

@@ -44,7 +44,7 @@ print('Type something to begin...')
 # The following loop will execute each time the user enters input
 while True:
     try:
-        input_statement = bot.input.process_input_statement()
+        input_statement, exists = bot.input.process_input_statement()
         statement, response = bot.generate_response(input_statement, DEFAULT_SESSION_ID)
 
         print('\n Is "{}" this a coherent response to "{}"? \n'.format(response, input_statement))

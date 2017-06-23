@@ -8,7 +8,7 @@ class BestMatch(LogicAdapter):
     the closest matches to the input statement.
     """
 
-    def __init__():
+    def __init__(self, **kwargs):
         super(BestMatch, self).__init__(**kwargs)
         self.adaptername = "BestMatch"
 

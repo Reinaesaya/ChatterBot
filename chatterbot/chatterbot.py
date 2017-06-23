@@ -1,5 +1,8 @@
 from __future__ import unicode_literals
 import logging
+import nltk
+from nltk.corpus import wordnet
+
 from .storage import StorageAdapter
 from .input import InputAdapter
 from .output import OutputAdapter
@@ -8,184 +11,212 @@ from . import utils
 
 
 class ChatBot(object):
-    """
-    A conversational dialog chat bot.
-    """
+	"""
+	A conversational dialog chat bot.
+	"""
 
-    def __init__(self, name, **kwargs):
-        from .conversation.session import ConversationSessionManager
-        from .logic import MultiLogicAdapter
+	def __init__(self, name, **kwargs):
+		from .conversation.session import ConversationSessionManager
+		from .logic import MultiLogicAdapter
 
-        self.nolearnoverridecomms = ['NewConversationStarter', 'ImageCaptioningAdapter']
+		self.nolearnoverridecomms = ['NewConversationStarter', 'ImageCaptioningAdapter']
 
-        self.name = name
-        kwargs['name'] = name
+		self.name = name
+		kwargs['name'] = name
 
-        storage_adapter = kwargs.get('storage_adapter', 'chatterbot.storage.JsonFileStorageAdapter')
+		storage_adapter = kwargs.get('storage_adapter', 'chatterbot.storage.JsonFileStorageAdapter')
 
-        logic_adapters = kwargs.get('logic_adapters', [
-            'chatterbot.logic.BestMatch'
-        ])
+		logic_adapters = kwargs.get('logic_adapters', [
+			'chatterbot.logic.BestMatch'
+		])
 
-        input_adapter = kwargs.get('input_adapter', 'chatterbot.input.VariableInputTypeAdapter')
+		input_adapter = kwargs.get('input_adapter', 'chatterbot.input.VariableInputTypeAdapter')
 
-        output_adapter = kwargs.get('output_adapter', 'chatterbot.output.OutputAdapter')
+		output_adapter = kwargs.get('output_adapter', 'chatterbot.output.OutputAdapter')
 
-        # Check that each adapter is a valid subclass of it's respective parent
-        utils.validate_adapter_class(storage_adapter, StorageAdapter)
-        utils.validate_adapter_class(input_adapter, InputAdapter)
-        utils.validate_adapter_class(output_adapter, OutputAdapter)
+		# Check that each adapter is a valid subclass of it's respective parent
+		utils.validate_adapter_class(storage_adapter, StorageAdapter)
+		utils.validate_adapter_class(input_adapter, InputAdapter)
+		utils.validate_adapter_class(output_adapter, OutputAdapter)
 
-        self.logic = MultiLogicAdapter(**kwargs)
-        self.storage = utils.initialize_class(storage_adapter, **kwargs)
-        self.input = utils.initialize_class(input_adapter, **kwargs)
-        self.output = utils.initialize_class(output_adapter, **kwargs)
+		self.logic = MultiLogicAdapter(**kwargs)
+		self.storage = utils.initialize_class(storage_adapter, **kwargs)
+		self.input = utils.initialize_class(input_adapter, **kwargs)
+		self.output = utils.initialize_class(output_adapter, **kwargs)
 
-        filters = kwargs.get('filters', tuple())
-        self.filters = tuple([utils.import_module(F)() for F in filters])
+		filters = kwargs.get('filters', tuple())
+		self.filters = tuple([utils.import_module(F)() for F in filters])
 
-        # Add required system logic adapter
-        self.logic.system_adapters.append(
-            utils.initialize_class('chatterbot.logic.NoKnowledgeAdapter', **kwargs)
-        )
+		# Add required system logic adapter
+		self.logic.system_adapters.append(
+			utils.initialize_class('chatterbot.logic.NoKnowledgeAdapter', **kwargs)
+		)
 
-        for adapter in logic_adapters:
-            self.logic.add_adapter(adapter, **kwargs)
+		for adapter in logic_adapters:
+			self.logic.add_adapter(adapter, **kwargs)
 
-        # Add the chatbot instance to each adapter to share information such as
-        # the name, the current conversation, or other adapters
-        self.logic.set_chatbot(self)
-        self.input.set_chatbot(self)
-        self.output.set_chatbot(self)
+		# Add the chatbot instance to each adapter to share information such as
+		# the name, the current conversation, or other adapters
+		self.logic.set_chatbot(self)
+		self.input.set_chatbot(self)
+		self.output.set_chatbot(self)
 
-        preprocessors = kwargs.get(
-            'preprocessors', [
-                'chatterbot.preprocessors.clean_whitespace'
-            ]
-        )
+		preprocessors = kwargs.get(
+			'preprocessors', [
+				'chatterbot.preprocessors.clean_whitespace'
+			]
+		)
 
-        self.preprocessors = []
+		self.preprocessors = []
 
-        for preprocessor in preprocessors:
-            self.preprocessors.append(utils.import_module(preprocessor))
+		for preprocessor in preprocessors:
+			self.preprocessors.append(utils.import_module(preprocessor))
 
-        # Use specified trainer or fall back to the default
-        trainer = kwargs.get('trainer', 'chatterbot.trainers.Trainer')
-        TrainerClass = utils.import_module(trainer)
-        self.trainer = TrainerClass(self.storage, **kwargs)
-        self.training_data = kwargs.get('training_data')
+		# Use specified trainer or fall back to the default
+		trainer = kwargs.get('trainer', 'chatterbot.trainers.Trainer')
+		TrainerClass = utils.import_module(trainer)
+		self.trainer = TrainerClass(self.storage, **kwargs)
+		self.training_data = kwargs.get('training_data')
 
-        self.conversation_sessions = ConversationSessionManager()
-        self.default_session = self.conversation_sessions.new()
+		self.conversation_sessions = ConversationSessionManager()
+		self.default_session = self.conversation_sessions.new()
 
-        self.logger = kwargs.get('logger', logging.getLogger(__name__))
+		self.logger = kwargs.get('logger', logging.getLogger(__name__))
 
-        # Allow the bot to save input it receives so that it can learn
-        self.read_only = kwargs.get('read_only', False)
+		# Allow the bot to save input it receives so that it can learn
+		self.read_only = kwargs.get('read_only', False)
 
-        if kwargs.get('initialize', True):
-            self.initialize()
+		if kwargs.get('initialize', True):
+			self.initialize()
 
-    def initialize(self):
-        """
-        Do any work that needs to be done before the responses can be returned.
-        """
-        from .utils import nltk_download_corpus
+	def initialize(self):
+		"""
+		Do any work that needs to be done before the responses can be returned.
+		"""
+		from .utils import nltk_download_corpus
 
-        # Download required NLTK corpora if they have not already been downloaded
-        nltk_download_corpus('corpora/stopwords')
-        nltk_download_corpus('corpora/wordnet')
-        nltk_download_corpus('tokenizers/punkt')
-        nltk_download_corpus('sentiment/vader_lexicon')
+		# Download required NLTK corpora if they have not already been downloaded
+		nltk_download_corpus('corpora/stopwords')
+		nltk_download_corpus('corpora/wordnet')
+		nltk_download_corpus('tokenizers/punkt')
+		nltk_download_corpus('sentiment/vader_lexicon')
 
-    def get_response(self, input_item, session_id=None, override=''):
-        """
-        Return the bot's response based on the input.
+	def get_response(self, input_item, session_id=None, override=''):
+		"""
+		Return the bot's response based on the input.
 
-        :param input_item: An input value.
-        :returns: A response to the input.
-        :rtype: Statement
-        """
-        if not session_id:
-            session_id = str(self.default_session.uuid)
+		:param input_item: An input value.
+		:returns: A response to the input.
+		:rtype: Statement
+		"""
+		if not session_id:
+			session_id = str(self.default_session.uuid)
 
-        input_statement = self.input.process_input_statement(input_item)
+		input_statement, input_exists = self.input.process_input_statement(input_item)
 
-        # Preprocess the input statement
-        for preprocessor in self.preprocessors:
-            input_statement = preprocessor(self, input_statement)
+		# Preprocess the input statement
+		for preprocessor in self.preprocessors:
+			input_statement = preprocessor(self, input_statement)
 
-        statement, response = self.generate_response(input_statement, session_id, override=override)
+		statement, response = self.generate_response(input_statement, session_id, override=override)
 
-        # Learn that the user's input was a valid response to the chat bot's previous output
-        if override not in self.nolearnoverridecomms: 
-            previous_statement = self.conversation_sessions.get(
-                session_id
-            ).conversation.get_last_response_statement()
-            self.learn_response(statement, previous_statement)
+		# Learn that the user's input was a valid response to the chat bot's previous output
+		if override not in self.nolearnoverridecomms: 
+			previous_statement = self.conversation_sessions.get(
+				session_id
+			).conversation.get_last_response_statement()
+			self.learn_response(statement, previous_statement)
 
-        self.conversation_sessions.update(session_id, (statement, response, ))
+		self.conversation_sessions.update(session_id, (statement, response, ))
 
-        # Process the response output with the output adapter
-        return self.output.process_response(response, session_id)
+		# Process the response output with the output adapter
+		return self.output.process_response(response, session_id)
 
-    def generate_response(self, input_statement, session_id, override=''):
-        """
-        Return a response based on a given input statement.
-        """
-        self.storage.generate_base_query(self, session_id)
+	def generate_response(self, input_statement, session_id, override=''):
+		"""
+		Return a response based on a given input statement.
+		"""
+		self.storage.generate_base_query(self, session_id)
 
-        # Select a response to the input statement
-        response = self.logic.process(input_statement, override=override)
+		# Select a response to the input statement
+		response = self.logic.process(input_statement, override=override)
 
-        return input_statement, response
+		return input_statement, response
 
-    def learn_response(self, statement, previous_statement):
-        """
-        Learn that the statement provided is a valid response.
-        """
-        from .conversation import Response
+	def generate_conversation(self, keyword):
+		"""
+		Return a conversation starter question from a keyword
+		"""
+		return self.get_response(input_item = keyword.lower(), override="NewConversationStarter")
 
-        if previous_statement:
-            statement.add_response(
-                Response(previous_statement.text)
-            )
-            self.logger.info('Adding "{}" as a response to "{}"'.format(
-                statement.text,
-                previous_statement.text
-            ))
+	def check_convo_keyword(self, keyword):
+		statement, exists = self.input.process_input_statement(keyword.lower())
+		if exists:
+			return keyword, True
+		else:
+			synonyms = []
+			antonyms = []
+			for syn in wordnet.synsets(keyword):
+				for l in syn.lemmas():
+					synonyms.append(" ".join(l.name().split("_")))
+					if l.antonyms():
+						antonyms.append(" ".join(l.antonyms()[0].name().split("_")))
+			synonyms = list(set(synonyms))
+			antonyms = list(set(antonyms))
+			print(synonyms)
+			for s in synonyms:
+				statement, exists = self.input.process_input_statement(s.lower())
+				if exists:
+					return s, True
+		return keyword, False
 
-        # Save the statement after selecting a response
-        if not self.read_only:
-            self.storage.update(statement)
 
-    def set_trainer(self, training_class, **kwargs):
-        """
-        Set the module used to train the chatbot.
+	def learn_response(self, statement, previous_statement):
+		"""
+		Learn that the statement provided is a valid response.
+		"""
+		from .conversation import Response
 
-        :param training_class: The training class to use for the chat bot.
-        :type training_class: `Trainer`
+		if previous_statement:
+			statement.add_response(
+				Response(previous_statement.text)
+			)
+			self.logger.info('Adding "{}" as a response to "{}"'.format(
+				statement.text,
+				previous_statement.text
+			))
 
-        :param \**kwargs: Any parameters that should be passed to the training class.
-        """
-        self.trainer = training_class(self.storage, **kwargs)
+		# Save the statement after selecting a response
+		if not self.read_only:
+			self.storage.update(statement)
 
-    @property
-    def train(self):
-        """
-        Proxy method to the chat bot's trainer class.
-        """
-        return self.trainer.train
+	def set_trainer(self, training_class, **kwargs):
+		"""
+		Set the module used to train the chatbot.
 
-    @classmethod
-    def from_config(cls, config_file_path):
-        """
-        Create a new ChatBot instance from a JSON config file.
-        """
-        import json
-        with open(config_file_path, 'r') as config_file:
-            data = json.load(config_file)
+		:param training_class: The training class to use for the chat bot.
+		:type training_class: `Trainer`
 
-        name = data.pop('name')
+		:param \**kwargs: Any parameters that should be passed to the training class.
+		"""
+		self.trainer = training_class(self.storage, **kwargs)
 
-        return ChatBot(name, **data)
+	@property
+	def train(self):
+		"""
+		Proxy method to the chat bot's trainer class.
+		"""
+		return self.trainer.train
+
+	@classmethod
+	def from_config(cls, config_file_path):
+		"""
+		Create a new ChatBot instance from a JSON config file.
+		"""
+		import json
+		with open(config_file_path, 'r') as config_file:
+			data = json.load(config_file)
+
+		name = data.pop('name')
+
+		return ChatBot(name, **data)

@@ -14,6 +14,7 @@ class LogicAdapter(Adapter):
         self.adaptername = "LogicAdapter"
         from chatterbot.comparisons import levenshtein_distance
         from chatterbot.response_selection import get_first_response
+        from chatterbot.response_selection import get_random_response
 
         # Import string module parameters
         if 'statement_comparison_function' in kwargs:
@@ -32,10 +33,10 @@ class LogicAdapter(Adapter):
             levenshtein_distance
         )
 
-        # By default, select the first available response
+        # By default, select the random response
         self.select_response = kwargs.get(
             'response_selection_method',
-            get_first_response
+            get_random_response
         )
 
     def can_process(self, statement):

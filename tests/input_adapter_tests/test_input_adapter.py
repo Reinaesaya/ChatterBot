@@ -26,5 +26,5 @@ class InputAdapterTestCase(ChatBotTestCase):
     def test_process_response_statement_initialized(self):
         self.adapter.chatbot = self.chatbot
         self.adapter.process_input = lambda *args, **kwargs: Statement('Hi')
-        response = self.adapter.process_input_statement()
+        response, exists = self.adapter.process_input_statement()
         self.assertEqual(response, 'Hi')

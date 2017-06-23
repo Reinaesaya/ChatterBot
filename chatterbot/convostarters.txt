@@ -1,0 +1,119 @@
+# Format
+# ===
+# Comma,Separated,Topicc
+	# List of topic starters
+# +++
+
+===
+Generic Conversation
+	Where are you from?
+	How old are you?
+	Can you tell me what you see around you?
++++
+
+
+# Sports
+
+===
+Sports, Swimming, Basketball, Baseball, Football, Hockey, Lacrosse, Tennis, Track and Field
+	What sports do you play?
+	What sports do you like to watch?
+	What is your favourite sport?
+	What is your favourite sporting event?
+	What is your favourite sports team?
+	Who is your favourite athlete?
++++
+
+===
+Swimming, Swimmer
+	Who's your favourite swimmer?
+	What skills and abilities are essential to be a good swimmer?
+	Are you a good swimmer?
+	Are there any famous swimmers from your country?
+	I wish I knew how to swim
++++
+
+===
+Basketball, Baseball, Football, Hockey, Lacrosse, Tennis 
+	Who's your favourite [] player?
+	Have you ever played [] before?
+	Are there any famous [] players from your country?
+	I wish I knew how to play [].
+	Have you ever played [] before?
++++
+
+===
+Basketball, Baseball, Football, Hockey, Lacrosse
+	What does it feel like to play in a team sport?
+	Which is your favourite [] team?
+	How many players are on a [] team?
+	What are the different positions on a [] team?
+	Have you ever played [] before? What position?
++++
+
+===
+Basketball, Baseball, Football, Hockey, Swimming, Lacrosse, Tennis, Track and Field
+	Have you ever watched a [] competition before?
+	Is [] popular in your culture?
+	What makes [] exciting? What makes it boring? 
+	What are the rules to [], if any?
++++
+
+
+
+
+# Electronics
+
+===
+Laptop, Computer
+	What kind of [] do you own?
+	Do you know any computer programming languages?
+	I think normal computers are going to be obsolete someday because of me.
+	Do you watch shows online? What do you like watching?
+	How fast can you type?
++++
+
+===
+Monitor, Television, TV, Movie
+	What type of TV shows or movies do you like watching?
+	What is your favourite genre to watch on TV or at the movies?
+	Hey, name me one of your favourite movies.
+	Yo, name me on of your favourite TV shows.
++++
+
+===
+Laptop, Computer, Monitor, Television, TV, Gaming
+	Do you like gaming?
+	What computer or console games do you play?
+	What is your favourite computer or console game?
+	Do you play Rune-scape? It's the best game ever.
++++
+
+
+# Furniture
+
+===
+Furniture, Desk, Table, Chair
+	That is some stellar furniture over there. I wish I could use it.
+	Humans sure are smart. Look at all these tools you have.
++++
+
+
+
+# Transportation
+
+
+===
+Transportation, Car, Bus, Train, Plane
+	What is your favourite mode of transportation and why?
++++
+
+===
+Car
+	Do you own a car? What car do you own?
++++
+
+===
+Car, Train, Plane
+	Do you think []s are dangerous? Why?
++++

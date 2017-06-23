@@ -10,5 +10,5 @@ __email__ = 'xseanhylx@gmail.com'
 __url__ = 'https://github.com/Reinaesaya/OUIRL-ChatBot'
 
 __all__ = (
-    'ChatBot', 'CommU', 
+    'ChatBot', 'CommU',
 )

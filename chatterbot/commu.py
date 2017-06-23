@@ -19,11 +19,28 @@ def countsyllables(word):
 		print("Syllables for word can't be count: "+word+". Defaulting to 3")
 		return 5
 
+
 class CommU():
 	def __init__(self, name='Sean', commandhost=SEND_COMMAND_HOST, commandport=SEND_COMMAND_PORT):
 		self.name = name
 		self.commandhost = commandhost
 		self.commandport = commandport
+		self.AXIS = {
+			'LATERAL_BODY': 0,
+			'PITCH_WAIST': 1,
+			'RAISEFORWARD_LEFTARM': 2,
+			'RAISELATERAL_LEFTARM': 3,
+			'RAISEFORWARD_RIGHTARM': 4,
+			'RAISELATERAL_RIGHTARM': 5,
+			'TILT_HEAD': 6,
+			'TURN_HEAD': 7,
+			'PITCH_HEAD': 8,
+			'EYES_UPDOWN': 9,
+			'LEFT_EYE_LATERAL': 10,
+			'RIGHT_EYE_LATERAL': 11,
+			'EYELIDS': 12,
+			'MOUTH': 13,
+		}
 
 	def openCommandSocket(self):
 		self.commandsocket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -53,6 +70,34 @@ class CommU():
 			self.commandsocket.sendall(command)
 			time.sleep(math.ceil(0.6*syllables))
 
+	def look(self, x, y, z):
+		try:
+			x = str(int(x))
+			y = str(int(y))
+			z = str(int(z))
+
+			command = '/look M '+x+' '+y+' '+z+' normal'
+			print(command)
+			self.commandsocket.sendall(command)
+			time.sleep(0.5)
+
+		except Exception as e:
+			print(e)
+
+	def move(self, axis_int, angle, speed):
+		try:
+			axis_int = str(int(axis_int))
+			angle = str(int(angle))
+			speed = str(int(speed))
+
+			command = '/move '+axis_int+' '+angle+' '+speed
+			print(command)
+			self.commandsocket.sendall(command)
+			time.sleep(0.5)
+
+		except Exception as e:
+			print(e)
+
 	def closeCommandSocket(self):
 		self.commandsocket.shutdown(socket.SHUT_RDWR)
-		self.commandsocket.close()
+		self.commandsocket.close() 

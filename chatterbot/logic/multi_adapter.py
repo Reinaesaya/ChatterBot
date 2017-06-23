@@ -38,6 +38,9 @@ class MultiLogicAdapter(LogicAdapter):
         override_adapters = [a for a in adapters_to_use if a.adaptername==override]
         if len(override_adapters) > 0:
             adapters_to_use = override_adapters
+        else:
+            if str(override) != "":
+                print ('Override adapter '+str(override)+' not initialized in ChatBot adapter use')
 
         for adapter in adapters_to_use:
             if adapter.can_process(statement):

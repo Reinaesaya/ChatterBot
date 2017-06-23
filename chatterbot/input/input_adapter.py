@@ -26,7 +26,9 @@ class InputAdapter(Adapter):
         if existing_statement:
             self.logger.info('"{}" is a known statement'.format(input_statement.text))
             input_statement = existing_statement
+            exists = True
         else:
             self.logger.info('"{}" is not a known statement'.format(input_statement.text))
+            exists = False
 
-        return input_statement
+        return input_statement, exists
