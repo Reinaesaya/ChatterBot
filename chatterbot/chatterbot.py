@@ -1,5 +1,6 @@
 from __future__ import unicode_literals
 import logging
+import os
 import nltk
 from nltk.corpus import wordnet
 
@@ -8,6 +9,7 @@ from .input import InputAdapter
 from .output import OutputAdapter
 from .imgcaption.im2txt.get_imgcaption import ImageCaptioner
 from . import utils
+from .constants import *
 
 
 class ChatBot(object):
@@ -220,3 +222,15 @@ class ChatBot(object):
 		name = data.pop('name')
 
 		return ChatBot(name, **data)
+
+
+	def getcaptiontimestamp(self):
+		while os.path.exists(COMMU_IMG_CAPTIONS_LOCK):
+			continue
+		open(COMMU_IMG_CAPTIONS_LOCK, 'w').close()
+		with open(COMMU_IMG_CAPTIONS, 'r') as f:
+			lines = f.readlines()
+		os.remove(COMMU_IMG_CAPTIONS_LOCK)
+		#print(lines)
+
+		return float(lines[0].strip())

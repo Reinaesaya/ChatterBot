@@ -89,6 +89,7 @@ if args.audio:
 if args.commumove or args.commutalk:
 	CommURobot = CommU()
 	CommURobot.openCommandSocket()
+	CommURobot.openCustomCommandSocket()
 
 print("Talk to Tatora! :)")
 while True:
@@ -117,15 +118,37 @@ while True:
 			actioncomm=True
 			if args.commumove:
 				CommURobot.look(user_input.split()[1], user_input.split()[2], user_input.split()[3])
+		elif user_input.startswith("--takepicture"):
+			actioncomm=True
+			if args.commumove or args.commutalk:
+				CommURobot.takepicture()
 		elif user_input.startswith("--lookforconvo"):
 			if args.commumove:
 				x = random.sample(xrange(100,400),1)[0]*random.sample([-1,1],1)[0]
 				y = random.sample(xrange(200,400),1)[0]
 				z = random.sample(xrange(250,750),1)[0]
 				CommURobot.look(x, y, z)
-				time.sleep(1)
+				
+				picturecommandsendtime = time.time()
+				CommURobot.takepicture()
+				while chatbot.getcaptiontimestamp() < picturecommandsendtime:
+					time.sleep(0.5)
+
 				tatora_response = chatbot.get_response("genconvoimage", override="ImageCaptioningAdapter")
-				CommURobot.look(0, 300, 300)
+				CommURobot.look(0, 400, 500)
+		elif user_input.startswith("--lookatscreenforconvo"):
+			if args.commumove:
+				CommURobot.move(CommURobot.AXIS['LATERAL_BODY'], 100, 100)
+				CommURobot.move(CommURobot.AXIS['TURN_HEAD'], 100, 50)
+				CommURobot.move(CommURobot.AXIS['PITCH_HEAD'], 0, 50)
+				
+				picturecommandsendtime = time.time()
+				CommURobot.takepicture()
+				while chatbot.getcaptiontimestamp() < picturecommandsendtime:
+					time.sleep(0.5)
+
+				tatora_response = chatbot.get_response("genconvoimage", override="ImageCaptioningAdapter")
+				CommURobot.look(0, 400, 500)
 		else:
 			tatora_response = chatbot.get_response(user_input, override=override)
 
@@ -146,4 +169,5 @@ while True:
 	except(KeyboardInterrupt, EOFError, SystemExit):
 		if args.commumove or args.commutalk:
 			CommURobot.closeCommandSocket()
+			CommURobot.closeCustomCommandSocket()
 		break

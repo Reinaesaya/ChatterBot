@@ -65,7 +65,9 @@ class ImageCaptioningAdapter(BestMatch):
             lines = f.readlines()
         os.remove(COMMU_IMG_CAPTIONS_LOCK)
 
-        captions = [x.split('.')[0].strip() for x in lines]
+        time = float(lines[0].strip())
+
+        captions = [x.split('.')[0].strip() for x in lines[1:]]
 
         #response = Statement('; '.join(captions))
         #response.confidence = 0.01      # Very small (never a prioirity unless forced)

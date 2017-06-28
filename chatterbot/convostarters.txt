@@ -117,3 +117,15 @@ Car
 Car, Train, Plane
 	Do you think []s are dangerous? Why?
 +++
+
+
+
+
+===
+Bowl, Cup, Food, Plate
+	What's your favourite food?
+	What do you like eating?
+	Would you say you're fat?
+	Please go on a diet.
+
++++

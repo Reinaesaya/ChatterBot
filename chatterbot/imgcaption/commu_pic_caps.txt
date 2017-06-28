@@ -1,3 +1,4 @@
-a man is holding a glass of wine . 0.000131608349287
-a man is holding a glass of wine 5.37421794355e-05
-a man is holding a glass of wine in his hand . 2.61764944079e-05
+1498641547.71
+a group of men playing a game of basketball . 0.00502751416974
+a group of people playing a game of basketball . 0.00249342738643
+a group of men playing a game of basketball on a court . 0.000375726264093

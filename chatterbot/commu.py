@@ -21,20 +21,27 @@ def countsyllables(word):
 
 
 class CommU():
-	def __init__(self, name='Sean', commandhost=SEND_COMMAND_HOST, commandport=SEND_COMMAND_PORT):
+	def __init__(self, name='Sean', commandhost=SEND_COMMAND_HOST, commandport=SEND_COMMAND_PORT, \
+		customcommandhost=CUSTOM_SEND_COMMAND_HOST, customcommandport=CUSTOM_SEND_COMMAND_PORT):
+			# Custom command ports are used for image capture (not part of CommUManager)
 		self.name = name
+		
 		self.commandhost = commandhost
 		self.commandport = commandport
+
+		self.customcommandhost = customcommandhost
+		self.customcommandport = customcommandport
+
 		self.AXIS = {
-			'LATERAL_BODY': 0,
-			'PITCH_WAIST': 1,
+			'PITCH_WAIST': 0,
+			'LATERAL_BODY': 1,
 			'RAISEFORWARD_LEFTARM': 2,
 			'RAISELATERAL_LEFTARM': 3,
 			'RAISEFORWARD_RIGHTARM': 4,
 			'RAISELATERAL_RIGHTARM': 5,
-			'TILT_HEAD': 6,
-			'TURN_HEAD': 7,
-			'PITCH_HEAD': 8,
+			'PITCH_HEAD': 6,
+			'TILT_HEAD': 7,
+			'TURN_HEAD': 8,
 			'EYES_UPDOWN': 9,
 			'LEFT_EYE_LATERAL': 10,
 			'RIGHT_EYE_LATERAL': 11,
@@ -45,6 +52,16 @@ class CommU():
 	def openCommandSocket(self):
 		self.commandsocket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 		self.commandsocket.connect((self.commandhost,self.commandport))
+
+	def openCustomCommandSocket(self):
+		self.customcommandsocket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+		self.customcommandsocket.connect((self.customcommandhost,self.customcommandport))
+
+	def takepicture(self):
+		command = '/takepicture'
+		print(command)
+		self.customcommandsocket.sendall(command)
+		time.sleep(1)
 
 	def say(self, sentence):
 		sentences = [re.sub(r'[\[\]\{\}\(\)\~\`\@\#\^\&\*\"\:\;\<\>\/\|\+\=\_\\"]','',s).strip() for s in sentence.split('.')]
@@ -101,3 +118,7 @@ class CommU():
 	def closeCommandSocket(self):
 		self.commandsocket.shutdown(socket.SHUT_RDWR)
 		self.commandsocket.close() 
+
+	def closeCustomCommandSocket(self):
+		self.customcommandsocket.shutdown(socket.SHUT_RDWR)
+		self.customcommandsocket.close() 

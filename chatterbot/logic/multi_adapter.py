@@ -23,6 +23,9 @@ class MultiLogicAdapter(LogicAdapter):
         # Requied logic adapters that must always be present
         self.system_adapters = []
 
+
+        self.excludedadapters = ['NewConversationStarter']          # Some adapters inherit directly and thus need to be weeded out, others only used with override
+
     def process(self, statement, override=''):
         """
         Returns the output of a selection of logic adapters
@@ -41,6 +44,7 @@ class MultiLogicAdapter(LogicAdapter):
         else:
             if str(override) != "":
                 print ('Override adapter '+str(override)+' not initialized in ChatBot adapter use')
+            adapters_to_use = [a for a in adapters_to_use if a.adaptername not in self.excludedadapters]
 
         for adapter in adapters_to_use:
             if adapter.can_process(statement):
@@ -64,6 +68,7 @@ class MultiLogicAdapter(LogicAdapter):
                     )
                 )
 
+                print output.text, output.confidence
                 if output.confidence > max_confidence:
                     result = output
                     max_confidence = output.confidence

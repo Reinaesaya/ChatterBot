@@ -21,5 +21,5 @@ class MitsukuChatBotAdapter(LogicAdapter):
             response.confidence = 0.1
         else:
             response = Statement(resp)
-            response.confidence = 0.75
+            response.confidence = 0.9
         return response
