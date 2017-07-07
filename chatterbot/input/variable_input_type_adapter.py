@@ -63,3 +63,10 @@ class VariableInputTypeAdapter(InputAdapter):
 
         def __str__(self):
             return repr(self.value)
+
+
+
+class TatoraVariableInputTypeAdapter(VariableInputTypeAdapter):
+    def __init__(self, **kwargs):
+        super(TatoraVariableInputTypeAdapter, self).__init__()
+        self.abstractadaptertype = "TATORA"

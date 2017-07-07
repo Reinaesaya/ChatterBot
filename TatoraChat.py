@@ -54,11 +54,11 @@ chatbot = ChatBot(
 		#    "statement_comparison_function": "chatterbot.comparisons.jaccard_similarity",
 		#    "response_selection_method": "chatterbot.response_selection.get_random_response"
 		#},
-		{
-			"import_path": "chatterbot.logic.BestMatch",
-			"statement_comparison_function": "chatterbot.comparisons.levenshtein_distance",
-			"response_selection_method": "chatterbot.response_selection.get_random_response"
-		},
+		#{
+		#	"import_path": "chatterbot.logic.BestMatch",
+		#	"statement_comparison_function": "chatterbot.comparisons.levenshtein_distance",
+		#	"response_selection_method": "chatterbot.response_selection.get_random_response"
+		#},
 	],
 	preprocessors=[
 		'chatterbot.preprocessors.clean_whitespace',
@@ -141,7 +141,7 @@ while True:
 				CommURobot.move(CommURobot.AXIS['LATERAL_BODY'], 100, 100)
 				CommURobot.move(CommURobot.AXIS['TURN_HEAD'], 100, 50)
 				CommURobot.move(CommURobot.AXIS['PITCH_HEAD'], 0, 50)
-				
+
 				picturecommandsendtime = time.time()
 				CommURobot.takepicture()
 				while chatbot.getcaptiontimestamp() < picturecommandsendtime:

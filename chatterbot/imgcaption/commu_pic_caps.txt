@@ -1,4 +1,4 @@
-1498641547.71
-a group of men playing a game of basketball . 0.00502751416974
-a group of people playing a game of basketball . 0.00249342738643
-a group of men playing a game of basketball on a court . 0.000375726264093
+1499421214.81
+a baseball player is getting ready to hit a ball . 0.00021767621435
+a baseball player is getting ready to hit the ball . 9.36819149937e-05
+a basketball game is being played on the court . 8.72499948131e-05

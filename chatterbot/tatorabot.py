@@ -117,11 +117,11 @@ class TatoraBot(object):
 
 	def train_convostart(self, convostarterpath):
 		print("Training conversation starters")
-		self.trainingbots["english corpus"].train(convostarter)
+		self.trainingbots["convo starter"].train(convostarterpath)
 
 	def train_engcorp(self):
 		print("Training english corpus")
-		self.trainingbots["convo starter"].train("chatterbot.corpus.english")
+		self.trainingbots["english corpus"].train("chatterbot.corpus.english")
 
 
 

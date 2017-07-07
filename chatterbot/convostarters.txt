@@ -6,9 +6,11 @@
 
 ===
 Generic Conversation
-	Where are you from?
-	How old are you?
+	Where are you from? How do you like it there?
 	Can you tell me what you see around you?
+	What do you usually like doing in your free time?
+	So why are you talking to me today?
+
 +++
 
 
@@ -127,5 +129,24 @@ Bowl, Cup, Food, Plate
 	What do you like eating?
 	Would you say you're fat?
 	Please go on a diet.
++++
 
+
+
+===
+Surfboard, Ocean, Wave, Sea
+	I really wish I could go to a beach someday.
+	Have you ever been on a cruise before? What does it feel like?
+	Can you describe to me what it is like to feel the ocean breeze?
++++
+
+
+
+
+
+===
+Person, People, Man, Woman
+	What would you say the fundamental difference is between you and me?
+	Can you explain to a robot like me what it is like to be a human being?
+	Can you tell me a joke or a riddle?
 +++

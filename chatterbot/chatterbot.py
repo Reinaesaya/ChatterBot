@@ -11,6 +11,8 @@ from .imgcaption.im2txt.get_imgcaption import ImageCaptioner
 from . import utils
 from .constants import *
 
+from .commu import CommU
+
 
 class ChatBot(object):
 	"""
@@ -88,8 +90,30 @@ class ChatBot(object):
 		# Allow the bot to save input it receives so that it can learn
 		self.read_only = kwargs.get('read_only', False)
 
+
+		# CommU
+		self.commu = None
+		self.commu_talk = kwargs.get('commu_talk', False)
+		self.commu_move = kwargs.get('commu_move', False)
+		if self.commu_talk or self.commu_move:
+			self.commu = self.initCommU()
+
 		if kwargs.get('initialize', True):
 			self.initialize()
+
+	def initCommU(self):
+		CommURobot = CommU()
+		CommURobot.openCommandSocket()
+		CommURobot.openCustomCommandSocket()
+		return CommURobot
+
+	def disconnectCommU(self):
+		if self.commu is not None:
+			self.commu.closeCommandSocket()
+			self.commu.closeCustomCommandSocket()
+
+	def resetCommU_initPos(self):
+		self.commu.look(0, 400, 500)
 
 	def initialize(self):
 		"""
@@ -103,6 +127,9 @@ class ChatBot(object):
 		nltk_download_corpus('tokenizers/punkt')
 		nltk_download_corpus('sentiment/vader_lexicon')
 
+		if self.commu is not None:
+			self.resetCommU_initPos()
+
 	def get_response(self, input_item, session_id=None, override=''):
 		"""
 		Return the bot's response based on the input.
@@ -114,7 +141,13 @@ class ChatBot(object):
 		if not session_id:
 			session_id = str(self.default_session.uuid)
 
-		input_statement, input_exists = self.input.process_input_statement(input_item)
+		if self.input.abstractadaptertype == "TATORA":
+			input_statement, input_exists, override = self.input.process_input_statement_tatora(input_item)
+		else:
+			input_statement, input_exists = self.input.process_input_statement(input_item)
+
+		if input_statement.text == "*actioncommand*":
+			return input_statement 							# Skip response generation because not available
 
 		# Preprocess the input statement
 		for preprocessor in self.preprocessors:
@@ -152,7 +185,7 @@ class ChatBot(object):
 		return self.get_response(input_item = keyword.lower(), override="NewConversationStarter")
 
 	def check_convo_keyword(self, keyword):
-		statement, exists = self.input.process_input_statement(keyword.lower())
+		statement, exists = self.input.check_if_known(keyword.lower())
 		if exists:
 			return keyword, True
 		else:
@@ -167,7 +200,7 @@ class ChatBot(object):
 			antonyms = list(set(antonyms))
 			print(synonyms)
 			for s in synonyms:
-				statement, exists = self.input.process_input_statement(s.lower())
+				statement, exists = self.input.check_if_known(s.lower())
 				if exists:
 					return s, True
 		return keyword, False

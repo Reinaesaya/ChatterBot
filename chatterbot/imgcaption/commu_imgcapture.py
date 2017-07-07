@@ -58,7 +58,7 @@ def sendFrame(serversocket, frame, resizefactor=1):
 	return serversocket.sendall(struct.pack("Q", len(data))+data)
 
 def quickTransferSnapshot(host,port,resizefactor=1):
-	serversocket = connectSocket('192.168.0.113',8092)
+	serversocket = connectSocket(host,port)
 	sendImage(serversocket, resizefactor)
 	serversocket.close()
 
@@ -131,4 +131,6 @@ if __name__ == "__main__":
 	#serversocket.close()
 
 
-	run_image_capturing_server()
+	run_image_capturing_server(resizefactor=0.5)
+
+	##

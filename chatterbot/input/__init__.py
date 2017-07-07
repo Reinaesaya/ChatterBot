@@ -4,7 +4,8 @@ from .gitter import Gitter
 from .hipchat import HipChat
 from .mailgun import Mailgun
 from .terminal import TerminalAdapter
-from .variable_input_type_adapter import VariableInputTypeAdapter
+from .variable_input_type_adapter import VariableInputTypeAdapter, TatoraVariableInputTypeAdapter
+from .voice_adapter import SimpleVoiceAdapter, TatoraVoiceAdapter
 
 
 __all__ = (
@@ -14,5 +15,6 @@ __all__ = (
     'HipChat',
     'Mailgun',
     'TerminalAdapter',
-    'VariableInputTypeAdapter',
+    'VariableInputTypeAdapter', 'TatoraVariableInputTypeAdapter',
+    'SimpleVoiceAdapter', 'TatoraVoiceAdapter',
 )

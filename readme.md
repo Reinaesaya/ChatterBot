@@ -22,6 +22,13 @@ pip install gTTS
 ## Pygame for playing mp3 audio and evaluating video input
 pip install pygame
 
+## Speech to Text
+pip install SpeechRecognition
+
+sudo apt-get install python-pyaudio python3-pyaudio
+
+pip install --upgrade google-api-python-client
+
 ```
 
 2) Navigate to [/chatterbot/imgcaption/](chatterbot/imgcaption) and follow the setup precedures there to implement image captioning
@@ -32,6 +39,16 @@ pip install pygame
 To run terminal-based example module, simply run:
 
 ```
+# To train
+python TatoraChat1.py -train
+
+# To run without training conversation into database
+python TatoraChat.py -readonly
+
+# To use CommU movement and voice
+python TatoraChat.py -commumove -commutalk
+
+
 python TatoraChat.py
 ```
 
