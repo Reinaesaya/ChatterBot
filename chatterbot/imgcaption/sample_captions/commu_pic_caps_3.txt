@@ -1,0 +1,4 @@
+1500369171.33
+a rear view mirror on the side of a car . 0.000626686597497
+a rear view mirror on the side of a vehicle . 0.000160107043052
+a rear view mirror on the side of a car with a dog on it . 1.05329786874e-06

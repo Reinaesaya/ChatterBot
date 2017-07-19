@@ -142,7 +142,13 @@ class ChatBot(object):
 			session_id = str(self.default_session.uuid)
 
 		if self.input.abstractadaptertype == "TATORA":
-			input_statement, input_exists, override = self.input.process_input_statement_tatora(input_item)
+			if self.input.terminal:
+				print("doesn't get here for some reason")
+				input_statement, input_exists, override = self.input.process_input_statement_cmdline(input_item)
+			elif self.input.control:
+				input_statement, input_exists, override = self.input.process_input_statement_tatoraControl(input_item)
+			else:
+				input_statement, input_exists, override = self.input.process_input_statement_tatora(input_item)
 		else:
 			input_statement, input_exists = self.input.process_input_statement(input_item)
 
@@ -198,7 +204,7 @@ class ChatBot(object):
 						antonyms.append(" ".join(l.antonyms()[0].name().split("_")))
 			synonyms = list(set(synonyms))
 			antonyms = list(set(antonyms))
-			print(synonyms)
+			#print(synonyms)
 			for s in synonyms:
 				statement, exists = self.input.check_if_known(s.lower())
 				if exists:

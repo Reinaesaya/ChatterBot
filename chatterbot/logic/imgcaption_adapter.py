@@ -17,6 +17,7 @@ class ImageCaptioningAdapter(BestMatch):
 	def __init__(self, **kwargs):
 		super(ImageCaptioningAdapter, self).__init__(**kwargs)
 		self.adaptername = "ImageCaptioningAdapter"
+		self.ctrlcount=1
 
 		self.visual_prompts = [
 			'what do you see',
@@ -39,6 +40,8 @@ class ImageCaptioningAdapter(BestMatch):
 			'start a conversation from what you see',
 			'start a conversation from what you see',
 			'ask a question based on what you see',
+			'start a conversation',
+			'start conversation',
 			'genconvoimage',
 		]
 
@@ -58,12 +61,29 @@ class ImageCaptioningAdapter(BestMatch):
 		# Statement doesn't do anything
 
 		# Read captions
-		while os.path.exists(COMMU_IMG_CAPTIONS_LOCK):
-			continue
-		open(COMMU_IMG_CAPTIONS_LOCK, 'w').close()
-		with open(COMMU_IMG_CAPTIONS, 'r') as f:
-			lines = f.readlines()
-		os.remove(COMMU_IMG_CAPTIONS_LOCK)
+		if self.control:
+			lock = CTRL_COMMU_IMG_CAPTIONS_LOCK.split('.')[0]+'_'+str(self.ctrlcount)+'.'+CTRL_COMMU_IMG_CAPTIONS_LOCK.split('.')[1]
+			caps = CTRL_COMMU_IMG_CAPTIONS.split('.')[0]+'_'+str(self.ctrlcount)+'.'+CTRL_COMMU_IMG_CAPTIONS.split('.')[1]
+			print(caps)
+
+			while os.path.exists(lock):
+				continue
+			open(lock, 'w').close()
+			with open(caps, 'r') as f:
+				lines = f.readlines()
+			os.remove(lock)
+
+			if self.ctrlcount == max(CTRL_RANGE):
+				self.ctrlcount = min(CTRL_RANGE)
+			else:
+				self.ctrlcount += 1
+		else:
+			while os.path.exists(COMMU_IMG_CAPTIONS_LOCK):
+				continue
+			open(COMMU_IMG_CAPTIONS_LOCK, 'w').close()
+			with open(COMMU_IMG_CAPTIONS, 'r') as f:
+				lines = f.readlines()
+			os.remove(COMMU_IMG_CAPTIONS_LOCK)
 
 		time = float(lines[0].strip())
 
@@ -116,6 +136,9 @@ class ImageCaptioningAdapter(BestMatch):
 				#response = Statement("I don't know a concrete conversation starter for caption nouns: "+" ".join([n[0] for n in mc5nouns]))
 				#response.confidence = 1
 				response = self.getkeywordstatement('generic conversation')
+
+			if self.control:
+				response.text = "By the way, "+response.text.lower()
 		else:
 			response = Statement(default_resp)
 			response.confidence = 0.01

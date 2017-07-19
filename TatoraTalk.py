@@ -13,6 +13,9 @@ parser = argparse.ArgumentParser()
 parser.add_argument('-log', action='store_true', help='Turn on logging')
 parser.add_argument('-commumove', action='store_true', help='Connect and use CommU Robot moving')
 parser.add_argument('-commutalk', action='store_true', help='Connect and use CommU Robot speech')
+parser.add_argument('-control', action='store_true', help='Control condition')
+parser.add_argument('-convoforce', action='store_true', help='Force conversation start cycle')
+parser.add_argument('-terminal', action='store_true', help='Use terminal commands (overrides microphone and control') 		# TERMINAL OVERRIDES CONTROL
 
 args = parser.parse_args()
 
@@ -20,6 +23,10 @@ if args.log:
 	# Enable info level logging
 	logging.basicConfig(level=logging.INFO)
 
+if args.terminal:
+	input_adapt = "chatterbot.input.TatoraVariableInputTypeAdapter"
+else:
+	input_adapt = "chatterbot.input.TatoraVoiceAdapter"
 
 chatbot = ChatBot(
 	'Tatora',
@@ -57,11 +64,14 @@ chatbot = ChatBot(
 	filters=[
 		#"chatterbot.filters.RepetitiveResponseFilter"
 	],
-	input_adapter="chatterbot.input.TatoraVoiceAdapter",
+	input_adapter=input_adapt,
 	output_adapter="chatterbot.output.OutputAdapter",
 	database="./test",
-	commu_talk=True,
-	commu_move=True,
+	commu_talk=args.commutalk,
+	commu_move=args.commumove,
+	control=args.control,
+	terminal=args.terminal,
+	convoforce=args.convoforce,
 )
 
 
@@ -69,7 +79,13 @@ print("Talk to Tatora! :)")
 while True:
 	try:
 		print("Talk!")
-		tatora_response = chatbot.get_response(None)
+		if args.terminal:
+			user_input = raw_input('You: ')
+			tatora_response = chatbot.get_response(user_input)
+
+		else:
+			tatora_response = chatbot.get_response(5)
+		
 		if tatora_response.text == "*actioncommand*":
 			continue
 
@@ -79,5 +95,5 @@ while True:
 			chatbot.commu.say(tatora_response.text)
 
 	except(KeyboardInterrupt, EOFError, SystemExit):
-		chatbot.commu.disconnectCommu()
+		chatbot.disconnectCommU()
 		break

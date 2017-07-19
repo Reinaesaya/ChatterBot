@@ -22,7 +22,8 @@ if args.log:
 chatbot = TatoraBot(database='./test', commu_move=args.commumove, commu_say=args.commutalk, pygame_say=args.audio, readonly=args.readonly)
 
 if args.train:
-	chatbot.trainall("/home/user2/Desktop/OUIRL-ChatBot/chatterbot/convostarters.txt")
+	#chatbot.trainall("/home/user2/Desktop/OUIRL-ChatBot/chatterbot/convostarters.txt")
+	chatbot.train_convostart("/home/user2/Desktop/OUIRL-ChatBot/chatterbot/convostarters.txt")
 
 
 chatbot.converse()

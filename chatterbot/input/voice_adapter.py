@@ -12,7 +12,7 @@ class SimpleVoiceAdapter(InputAdapter):
     communicate through the terminal.
     """
 
-    def process_input(self, *args, **kwargs):
+    def process_input(self, audio_timeout=RECV_AUDIO_TIMEOUT):
         """
         Listen for user voice
         """
@@ -21,7 +21,7 @@ class SimpleVoiceAdapter(InputAdapter):
         try:
             ms = connectMicrophoneSocket(host=SEND_LISTENCOMMAND_HOST, port=SEND_LISTENCOMMAND_PORT)
             try:
-                sendListenCommand(ms, RECV_AUDIO_TIMEOUT)
+                sendListenCommand(ms, audio_timeout)
             except Exception as e:
                 print("Here: "+e)
                 pass
@@ -51,11 +51,14 @@ class SimpleVoiceAdapter(InputAdapter):
 class TatoraVoiceAdapter(SimpleVoiceAdapter):
 
     def __init__(self, **kwargs):
-        super(TatoraVoiceAdapter, self).__init__()
+        super(TatoraVoiceAdapter, self).__init__(**kwargs)
         self.abstractadaptertype = "TATORA"
 
     def processMessage(self, message):
         if message.startswith('*') and message.endswith('*'):
-            return "--lookatscreenforconvo"
+            if self.control:
+                return "--genconvoimage"
+            else:
+                return "--lookatscreenforconvo"
         else:
             return message

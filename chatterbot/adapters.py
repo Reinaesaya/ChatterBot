@@ -10,6 +10,10 @@ class Adapter(object):
         self.logger = kwargs.get('logger', logging.getLogger(__name__))
         self.chatbot = None
 
+        self.control = kwargs.get('control', False)
+        self.terminal = kwargs.get('terminal', False)
+        self.convoforce = kwargs.get('convoforce', False)
+
     def set_chatbot(self, chatbot):
         """
         Gives the adapter access to an instance of the ChatBot class.

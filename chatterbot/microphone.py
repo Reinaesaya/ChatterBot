@@ -79,7 +79,7 @@ if __name__ == "__main__":
 	rs = openReceiveSocket(host='', port=8093)
 
 	try:
-		ms = connectMicrophoneSocket(host='192.168.1.91', port=8076)
+		ms = connectMicrophoneSocket(host='192.168.1.144', port=8076)
 		try:
 			sendListenCommand(ms, 5)
 		except:
