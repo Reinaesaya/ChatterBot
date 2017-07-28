@@ -1,4 +1,4 @@
-1500452206.67
-a group of men playing a game of basketball . 0.00478677582799
-a group of people playing a game of basketball . 0.00272337903312
-a group of men playing a game of frisbee . 0.00263280285298
+1501220498.61
+a group of men playing a game of basketball . 0.00429436685437
+a group of people playing a game of basketball . 0.00218819302137
+a group of men playing a game of soccer . 0.00149947431706

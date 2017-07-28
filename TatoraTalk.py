@@ -39,7 +39,7 @@ chatbot = ChatBot(
 		"chatterbot.logic.MitsukuChatBotAdapter",
 		"chatterbot.logic.TimeLogicAdapter",
 		"chatterbot.logic.DateLogicAdapter",
-		"chatterbot.logic.MathematicalEvaluation",
+		#"chatterbot.logic.MathematicalEvaluation",
 		"chatterbot.logic.ImageCaptioningAdapter",
 		{
 			"import_path": "chatterbot.logic.NewConversationStarter",

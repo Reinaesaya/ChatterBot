@@ -178,6 +178,8 @@ class InputAdapter(Adapter):
 		"""
 		Return an existing statement object (if one exists).
 		"""
+		self.cycle += 1
+
 		input_statement = self.process_input(*args, **kwargs)
 		self.logger.info('Received input statement: {}'.format(input_statement.text))
 
@@ -190,7 +192,7 @@ class InputAdapter(Adapter):
 			if self.chatbot.commu_move:
 				self.chatbot.commu.move(self.chatbot.commu.AXIS['LATERAL_BODY'], 100, 100)
 				self.chatbot.commu.move(self.chatbot.commu.AXIS['TURN_HEAD'], 100, 50)
-				self.chatbot.commu.move(self.chatbot.commu.AXIS['PITCH_HEAD'], 0, 50)
+				self.chatbot.commu.move(self.chatbot.commu.AXIS['PITCH_HEAD'], 0, 150)
 
 				picturecommandsendtime = time.time()
 				self.chatbot.commu.takepicture()

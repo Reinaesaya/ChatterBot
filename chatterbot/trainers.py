@@ -129,6 +129,7 @@ class ConvoStarterTrainer(Trainer):
 						continue
 					for topic in topics:
 						convostartreplaced = convostart.replace('[]',topic)
+						#print(topic+": "+convostartreplaced)
 						trainer.train([topic, convostartreplaced])
 
 

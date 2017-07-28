@@ -155,7 +155,10 @@ class ImageCaptioningAdapter(BestMatch):
 
 	def getkeywordstatement(self, keyword):
 		input_statement = Statement(keyword)
+		#print(keyword)
 		closest_match = self.get(input_statement)
+		#closest_match = input_statement
+		#print(closest_match)
 		response_list = self.chatbot.storage.filter(
 			in_response_to__contains=closest_match.text
 		)

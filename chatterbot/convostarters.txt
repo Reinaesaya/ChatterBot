@@ -10,7 +10,6 @@ Generic Conversation
 	Can you tell me what you see around you?
 	What do you usually like doing in your free time?
 	So why are you talking to me today?
-
 +++
 
 
@@ -106,8 +105,9 @@ Furniture, Desk, Table, Chair
 
 
 ===
-Transportation, Car, Bus, Train, Plane
+Transportation, Car, Bus, Train, Plane, Boat
 	What is your favourite mode of transportation and why?
+	Where do you like to go on vacation and why?
 +++
 
 ===
@@ -118,6 +118,7 @@ Car
 ===
 Car, Train, Plane
 	Do you think []s are dangerous? Why?
+	Have you ridden a [] recently? Where did you go?
 +++
 
 
@@ -134,7 +135,7 @@ Bowl, Cup, Food, Plate
 
 
 ===
-Surfboard, Ocean, Wave, Sea
+Surfboard, Ocean, Wave, Sea, Beach, Boat
 	I really wish I could go to a beach someday.
 	Have you ever been on a cruise before? What does it feel like?
 	Can you describe to me what it is like to feel the ocean breeze?
