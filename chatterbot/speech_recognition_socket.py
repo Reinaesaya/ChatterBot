@@ -21,18 +21,7 @@ def listenMessage(recognizer,timeout=None):
 		audio = recognizer.listen(source, timeout=timeout)
 	
 	# recognize speech using Google Cloud Speech
-	GOOGLE_CLOUD_SPEECH_CREDENTIALS = r"""{
-  "type": "service_account",
-  "project_id": "tribal-primacy-107411",
-  "private_key_id": "39fabbaf6fa0021157a3a0815c96dcd8fc30896f",
-  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvAIBADANBgkqhkiG9w0BAQEFAASCBKYwggSiAgEAAoIBAQDduJrcSkuaZi+X\nTr0k1pnXQwoeDf5wWZJNP+t7RgOOHZG/fT6ALjh4KKl2JZfNa+B+ioVCNiKzgMkJ\nG6HTaPS54ZDVDyxHXBNTXgkMnN5aREHC1phG5sg4GsJeNvnxgraNZIacTSsp/Nhs\nBSBGtDWvZJyum6aHwcqa/reuMm96bOZ3atOyQvIOVb66MxTs/pqosMyUVUplzUQQ\njoCu1GVUfe2/dJT/mn+YNJsNfn5OchWGi7DhQvnMPbO2TFWcewgw3wnZkzTRm88A\ndthlDjPaVRGNyoc6PcaW4T/I9r7Xx4IdlC1Zp3wr67N8eWRmh35zqtIg25axrCGA\ndlOuHKARAgMBAAECgf8J6qsCfBz/JHlJPmK3T+HeZUebXVGqZ/DJnVJEitBRF7St\nG+Ai9SF31/NV+9h0sTgZPZjR0IBwBt9dYoVnLz3C32CnwHktt+O+/TW3NEzw1jZN\n88sok90T2ITymDYVpAMGNlJokaSclb9Le+81oMAsWBOp7sxD+VojR8E8L7h/55Z2\n6Dzsv/Q0AccBKWuwI31S+wzUuaIEnNB3rZtNmXimfNJvgE3kmPwIgztTEMKguscI\njjJBKydem8lmijzdNpQS/a/QxshfSnTichPQKnMG+k8X9rGKd75PSZn6sJuxSvd3\nUAeUSg1xzOSRPXhbo0CYwHFkQ6LczazKYd6rhp0CgYEA+pFgx0pivMm+yC8jUfTt\nrLPcFpzCwZMelM0TTQjUz6mNMwMo2mb0hc0FzwVEGuVqZrmv5qJts6AM7EQi1LfB\n3ISD25QMJvfN6BR0T2yi/ds2QgO3tb2O4Dl6EInuW0Wdkz0N+d+BY9oi4i8Lm9E8\nG52EM0rB75zgBXuSXMalzt0CgYEA4ocheCCaQX+YhEKj4SftqFxYFLqkHIoe3qlg\n8zqKxtvt/mkNWpZe7wr3r0FNu9/BIsVqN5N2EMdNtD0F/gHEhEUTY8kkt8z7F4q0\nA75whYXH7CB8MGhPHIcxRljwE3mMGka3fFKZpYmdgGrgFuEi6VWASOfTuF7Pvj/6\nF0V3MMUCgYEA8MyhmySLey7O4AcdBHhDqUM4caq5J9rA+vOSZufjzKX/AlU4/5sN\nx0BfIrLG3qo29P3iY90ZXBSmFrDsYE0wS0I2jeDbRN/EzBJMLMAUa64tmIeGF2xS\nUH4sJpTHsoNWideVBNuct189Qu0/VMFh6JAaKkjf0+yJBfvZjruBQSkCgYA2AfO3\n2UYNwacSOXUq9EMUNdgGMS15ZHDRs15a/yUhHkRSuKcnZtyBb4L39MDcvw8kBB87\n2tt2Sp47D6WDFtbMlk92JfmsHKHszfP3RIs9OlUc9e3F+MiLy6uy0veCHSOLDDso\n1+Sr8/BqMpD0w354VRs9xo/S0EAFYul0bOpq5QKBgQDuCYD/ifNf4C+NsTcTlOJY\nuleXKQyTDxyIpPn7nVasP85xVq62lAwuzpJyYOqujMvb1XEKxOEXIcpluiu8LU9s\nBYGfS9gKtjbsPWGhd9JfSe1DBsiTOfobHcOhAn8hOotL07kpZ1NpeXAD0TTtS03m\n1iZardZS8cyjSeH8CgHkCw==\n-----END PRIVATE KEY-----\n",
-  "client_email": "tribal-primacy-107411@appspot.gserviceaccount.com",
-  "client_id": "111168719916558691174",
-  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
-  "token_uri": "https://accounts.google.com/o/oauth2/token",
-  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
-  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/tribal-primacy-107411%40appspot.gserviceaccount.com"
-}"""
+	GOOGLE_CLOUD_SPEECH_CREDENTIALS = r"""[insert]"""
 	try:
 		print("Translating audio")
 		message = recognizer.recognize_google_cloud(audio, credentials_json=GOOGLE_CLOUD_SPEECH_CREDENTIALS)
